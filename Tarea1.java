@@ -119,7 +119,7 @@ class Nodo {
 class ListaDoble {
 	private Nodo	pri	= null; // primero
 	//private Nodo	act	= null; // actual
-	private Nodo	ult	= null; // último
+	//private Nodo	ult	= null; // último
 
 	public ListaDoble() { // sin arg
 		return;
