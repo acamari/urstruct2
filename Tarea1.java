@@ -31,7 +31,7 @@ public class Tarea1 {
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 		String linea = null;
 		ListaDoble l = new ListaDoble();
-		while (true) {
+		for (;;) {
 			try { 
 				linea = stdin.readLine(); 
 			} catch (IOException e) {
@@ -59,13 +59,26 @@ public class Tarea1 {
 
 class Nodo {
 	public String		dato	= null;
-	public Nodo		prev	= null;
-	public Nodo		sig	= null;
+	private Nodo		prev	= null;
+	private Nodo		sig	= null;
 
 	public Nodo(String arg) {
 		this.dato = arg;
 		return;
 	}
+	public Nodo obtenprev() {
+		return this.prev;
+	}
+	public Nodo obtensig() {
+		return this.sig;
+	}
+	public Nodo modprev(Nodo arg) {
+		return this.prev = arg;
+	}
+	public Nodo modsig(Nodo arg) {
+		return this.sig = arg;
+	}
+
 }
 
 class ListaDoble {
@@ -84,25 +97,25 @@ class ListaDoble {
 			pri = n;
 			return true;
 		}
-		for (p = pri; p != null; p = p.sig) {
+		for (p = pri; p != null; p = p.obtensig()) {
 			// actual es lógicamente mayor al nodo a insertar
 			// entonces, inserta antes de él
 			if (p.dato.compareTo(n.dato) > 0) {
 				//System.err.println(n.dato + " < " + p.dato);
 				// no es el primer elemento
-				if (p.prev != null) p.prev.sig = n;
-				n.prev = p.prev;
-				p.prev = n;
-				n.sig = p;
+				if (p.obtenprev() != null) p.obtenprev().modsig(n);
+				n.modprev(p.obtenprev());
+				p.modprev(n);
+				n.modsig(p);
 				if (p == pri) pri = n; // actual era el primero
 				return true;
 
 			// actual es el último nodo, inserta después de él
-			} else if (p.sig == null) {
+			} else if (p.obtensig() == null) {
 				//System.err.println("last: " + n.dato + " < " + p.dato);
-				p.sig = n;
-				n.prev = p;
-				n.sig = null;
+				p.modsig(n);
+				n.modprev(p);
+				n.modsig(null);
 				return true;
 			}
 		}
@@ -113,14 +126,14 @@ class ListaDoble {
 	public int rm(Nodo n) { 
 		int el = 0; // eliminados
 		//System.err.println("borrando: " + n.dato);
-		for (Nodo p = pri; p != null; p = p.sig) {
+		for (Nodo p = pri; p != null; p = p.obtensig()) {
 			if (!p.dato.equals(n.dato)) continue;
-			if (p.prev == null && p.sig == null) { // único elem
+			if (p.obtenprev() == null && p.obtensig() == null) { // único elem
 				pri = null;
-			} else if (p.prev == null) { // primer elem
-				p.sig.prev = null;
-				pri = p.sig;
-				p.sig = null;
+			} else if (p.obtenprev() == null) { // primer elem
+				p.obtensig().modprev(null);
+				pri = p.obtensig();
+				p.modsig(null);
 			}
 			++el;
 		}
@@ -128,7 +141,7 @@ class ListaDoble {
 	}
 	// imprime lista
 	public void imprime() {
-		for (Nodo p = pri; p != null; p = p.sig) {
+		for (Nodo p = pri; p != null; p = p.obtensig()) {
 			System.out.println(p.dato);
 		}
 	}
