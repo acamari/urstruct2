@@ -120,7 +120,7 @@ class Nodo {
 		this.prev = arg.prev;
 		this.sig = arg.sig;
 	}
-	public Nodo(String a) { // useful for searches
+	public Nodo(String a) { // útil en búsquedas
 		this.nom = a;
 	}
 	public Nodo(String a, String b, String c, String d) {
