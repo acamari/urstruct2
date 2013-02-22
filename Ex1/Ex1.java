@@ -160,7 +160,7 @@ class ListaDoble {
 			pri = n;
 			return true;
 		}
-		for (p = pri; p != null; p = p.obtensig()) {
+		for (p = pri; p.obtensig() != null; p = p.obtensig()) {
 			// actual es lógicamente mayor al nodo a insertar
 			// entonces, inserta antes de él
 			if (p.nom.compareTo(n.nom) > 0) {
@@ -173,17 +173,14 @@ class ListaDoble {
 				if (p == pri) pri = n; // actual era el primero
 				return true;
 
-			// actual es el último nodo, inserta después de él
-			} else if (p.obtensig() == null) {
-				//System.err.println("last: p: " + p + " nom: " + p.nom + " prev: " + p.obtenprev() + " sig: " + p.obtensig());
-				//System.err.println("last: n: " + n + " nom: " + n.nom + " prev: " + n.obtenprev() + " sig: " + n.obtensig());
-				p.modsig(n);
-				n.modprev(p);
-				n.modsig(null);
-				return true;
-			}
 		}
-		return false;
+		// se esta en el ultimo elemento de la lista
+		//System.err.println("last: p: " + p + " nom: " + p.nom + " prev: " + p.obtenprev() + " sig: " + p.obtensig());
+		//System.err.println("last: n: " + n + " nom: " + n.nom + " prev: " + n.obtenprev() + " sig: " + n.obtensig());
+		p.modsig(n);
+		n.modprev(p);
+		n.modsig(null);
+		return true;
 	}
 	// remueve de la lista el primer nodo cuyo nom sea lógicamente igual a
 	// n.nom, regresa el objeto borrado, null en caso de no encontrar alguno
