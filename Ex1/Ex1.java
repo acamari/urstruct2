@@ -172,7 +172,7 @@ class ListaDoble {
 				n.modsig(p);
 				if (p == pri) pri = n; // actual era el primero
 				return true;
-
+			}
 		}
 		// se esta en el ultimo elemento de la lista
 		//System.err.println("last: p: " + p + " nom: " + p.nom + " prev: " + p.obtenprev() + " sig: " + p.obtensig());
